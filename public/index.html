@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Interactive demo: every Redis write is read back via GraphQL on a Materia KV cluster." />
+    <title>Materia KV — Dual Protocol Demo</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">◆</span>
+        <div>
+          <h1>Materia KV<span class="h1-sep" aria-hidden="true"> / </span><span class="h1-sub">Dual Protocol</span></h1>
+          <p class="subtitle">Pre-written scenarios, run live — every Redis write is read back via GraphQL.</p>
+        </div>
+      </div>
+      <aside class="cluster-info" aria-label="Cluster protocols">
+        <span class="cluster-label">Live cluster</span>
+        <span class="cluster-ports">
+          <span class="port"><span class="port-dot redis" aria-hidden="true"></span>Redis<span class="port-num" id="redis-port-label"></span></span>
+          <span class="port"><span class="port-dot graphql" aria-hidden="true"></span>GraphQL</span>
+        </span>
+      </aside>
+    </header>
+
+    <div class="layout">
+      <nav class="sidebar" aria-label="Scenarios">
+        <div class="sidebar-title">
+          <span class="sidebar-label">Run a scenario</span>
+          <span class="sidebar-count" id="scenario-count" aria-hidden="true">—</span>
+        </div>
+        <ul id="scenario-list" class="scenario-list" aria-label="Scenarios"></ul>
+        <footer class="sidebar-footer">
+          <p>Each entry executes a fixed sequence of Redis commands and a GraphQL query against the cluster.</p>
+        </footer>
+      </nav>
+
+      <main id="main" class="stage" tabindex="-1">
+        <section id="empty-state" class="empty-state" aria-labelledby="empty-title">
+          <div class="empty-inner">
+            <div class="empty-arrow">
+              <span class="arrow-glyph arrow-desktop" aria-hidden="true">←</span>
+              <span class="arrow-glyph arrow-mobile" aria-hidden="true">↑</span>
+              <span>Pick a scenario</span>
+            </div>
+            <h2 id="empty-title">Run a live request against the cluster</h2>
+            <p>
+              Each entry on the left fires a fixed set of <code>Redis</code> commands and
+              a <code>GraphQL</code> query, then streams back exactly what the server returned —
+              with timestamps, durations, and the raw responses.
+            </p>
+          </div>
+        </section>
+
+        <section id="result" class="result" hidden aria-labelledby="result-title" aria-busy="false">
+          <header class="result-header">
+            <div class="result-title-block">
+              <span class="result-eyebrow" id="result-eyebrow">SCENARIO —</span>
+              <h2 id="result-title"></h2>
+              <p id="result-summary" class="result-summary"></p>
+              <p id="result-narrative" class="result-narrative"></p>
+            </div>
+            <div class="run-meta">
+              <div class="run-meta-row">
+                <span class="run-id" id="run-id">Run #—</span>
+                <span class="run-sep" aria-hidden="true">·</span>
+                <span class="run-time" id="run-time">—</span>
+              </div>
+              <button id="btn-rerun" class="btn-rerun" type="button">
+                <span class="play" aria-hidden="true">▶</span> Run again
+              </button>
+            </div>
+          </header>
+
+          <div class="flow">
+            <section class="protocol-box redis" aria-labelledby="redis-title">
+              <header class="protocol-header">
+                <span class="tag tag-redis" id="redis-title">Redis</span>
+                <span class="protocol-sub">WRITE PATH</span>
+                <span class="protocol-spinner" id="spinner-redis" aria-hidden="true" hidden></span>
+              </header>
+              <div id="redis-events" class="event-list"></div>
+            </section>
+
+            <div class="arrow" aria-hidden="true">
+              <span class="arrow-line"></span>
+              <span class="arrow-tip">▶</span>
+            </div>
+
+            <section class="protocol-box graphql" aria-labelledby="graphql-title">
+              <header class="protocol-header">
+                <span class="tag tag-graphql" id="graphql-title">GraphQL</span>
+                <span class="protocol-sub">READ PATH</span>
+                <span class="protocol-spinner" id="spinner-graphql" aria-hidden="true" hidden></span>
+              </header>
+              <div id="graphql-events" class="event-list"></div>
+            </section>
+          </div>
+
+          <p id="status-region" class="visually-hidden" role="status" aria-live="polite"></p>
+
+          <footer class="result-footer">
+            <span id="result-footer-text" class="footer-text"></span>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

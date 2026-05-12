@@ -1,0 +1,24 @@
+{
+  "name": "kv-graphql-example",
+  "description": "Interactive demo that shows the same data flowing through Redis (write) and GraphQL (read) on a Materia KV cluster.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "bun": ">=1.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CleverCloud/kv-graphql-example.git"
+  },
+  "scripts": {
+    "start": "bun src/server.ts",
+    "dev": "bun --watch src/server.ts",
+    "typecheck": "bun tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.13",
+    "typescript": "^6.0.3"
+  }
+}
